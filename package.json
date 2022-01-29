@@ -1,0 +1,35 @@
+{
+  "name": "mv-pay",
+  "version": "1.0.0",
+  "description": "An Open Source payment service application to integrate any payment gateway available in Maldives.",
+  "main": "./src/server.ts",
+  "repository": "git@github.com:devops-mv/mv-pay.git",
+  "author": "Ahmed Salim",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "lint": "tslint -c tslint.json -p tsconfig.json --fix"
+  },
+  "dependencies": {
+    "@types/bookshelf": "^1.2.7",
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.5",
+    "@types/koa-router": "^7.4.4",
+    "bookshelf": "^1.2.0",
+    "bookshelf-case-converter-plugin": "^2.0.0",
+    "dotenv": "^14.3.2",
+    "knex": "^1.0.1",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.1.1",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "tslint": "^6.1.3",
+    "typescript": "^4.5.5"
+  }
+}
