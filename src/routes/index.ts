@@ -1,9 +1,9 @@
-import Router = require("koa-router");
 
-const router = new Router();
+import * as combineRouters from "koa-combine-routers";
+import userRoutes from './users';
 
-router.get('/(.*)', async (ctx) => {
-    ctx.body = 'Hello World!';
-});
+const router = combineRouters(
+  userRoutes
+);
 
 export default router;

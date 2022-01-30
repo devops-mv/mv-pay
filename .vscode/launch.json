@@ -9,10 +9,7 @@
       "request": "attach",
       "name": "Docker: Attach to Node",
       "port": 7001,
-      "address": "127.0.0.1",
-      "localRoot": "${workspaceFolder}",
       "remoteRoot": "/usr/src/app",
-      "program": "${workspaceFolder}/src/server.ts"
     },
     {
       "type": "pwa-node",

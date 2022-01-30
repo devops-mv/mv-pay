@@ -9,20 +9,29 @@
   "private": false,
   "scripts": {
     "dev": "ts-node-dev --inspect=0.0.0.0:9229 --respawn --transpile-only ./src/server.ts",
+    "knex": "knex --knexfile=./src/database/knexfile.ts",
+    "migration": "yarn knex migrate:make -x ts",
+    "migrate": "yarn knex migrate:latest",
+    "rollback": "yarn knex migrate:rollback",
+    "refresh": "yarn rollback && yarn migrate && yarn seed",
+    "seed": "yarn knex seed:run",
     "lint": "tslint -c tslint.json -p tsconfig.json --fix"
   },
   "dependencies": {
+    "@koa/router": "^10.1.1",
+    "@types/bcrypt": "^5.0.0",
     "@types/bookshelf": "^1.2.7",
     "@types/koa": "^2.13.4",
     "@types/koa-bodyparser": "^4.3.5",
-    "@types/koa-router": "^7.4.4",
+    "@types/koa__router": "^8.0.11",
+    "bcrypt": "^5.0.1",
     "bookshelf": "^1.2.0",
     "bookshelf-case-converter-plugin": "^2.0.0",
     "dotenv": "^14.3.2",
     "knex": "^1.0.1",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
-    "koa-router": "^10.1.1",
+    "koa-combine-routers": "^4.0.2",
     "pg": "^8.7.1"
   },
   "devDependencies": {

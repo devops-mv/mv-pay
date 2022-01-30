@@ -1,31 +1,40 @@
-// require("dotenv").config({ path: "../.env" });
-import 'dotenv/config';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: "../../.env" });
 
-const DEVELOPMENT: string = "development";
-const PRODUCTION: string = "production";
-const TESTING: string = "testing";
-
-const config: Knex.Config = {
-  client: process.env.DB_DRIVER,
-  debug: true,
-  connection: {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    charset: "utf8"
+const config: { [key: string]: Knex.Config } = {
+  development: {
+    client: process.env.DB_DRIVER,
+    connection: {
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+      charset: "utf8"
+    },
+    migrations: {
+      directory: __dirname + "/migrations"
+    },
+    seeds: {
+      directory: __dirname + "/seeds"
+    }
   },
-  migrations: {
-    directory: __dirname + "/migrations"
+  production: {
+    client: process.env.DB_DRIVER,
+    connection: {
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+      charset: "utf8"
+    },
+    migrations: {
+      directory: __dirname + "/migrations"
+    },
+    seeds: {
+      directory: __dirname + "/seeds"
+    }
   },
-  seeds: {
-    directory: __dirname + "/seeds"
-  }
 };
 
-export default {
-  [DEVELOPMENT]: Object.assign({}, config),
-  [PRODUCTION]: Object.assign({}, config),
-  [TESTING]: Object.assign({}, config)
-};
+export default config;

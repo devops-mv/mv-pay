@@ -5,8 +5,7 @@ import router from './routes';
 
 const app = new Koa();
 
-app.use(router.routes())
-  .use(router.allowedMethods())
+app.use(router())
   .use(bodyParser());
 
 const PORT: number = Number(process.env.PORT) || 3000;
