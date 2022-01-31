@@ -4,6 +4,7 @@ dotenv.config({ path: "../../.env" });
 
 const config: { [key: string]: Knex.Config } = {
   development: {
+    debug: true,
     client: process.env.DB_DRIVER,
     connection: {
       host: process.env.DB_HOST,
