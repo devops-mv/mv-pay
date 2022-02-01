@@ -7,4 +7,15 @@ export class UserRepository extends AbstractRepository<User> {
   constructor() {
     super();
   }
+
+  async getByCredentials(username: string, password: string): Promise<ISingleResult<any>> {
+    const user = await new this.model({ username }).fetch();
+    const result = {
+      data: user.toJSON()
+    };
+
+    result.data.password = user.attributes.password;
+
+    return result;
+  }
 }

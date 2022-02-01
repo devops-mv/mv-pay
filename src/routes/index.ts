@@ -1,9 +1,11 @@
 
 import * as combineRouters from "koa-combine-routers";
-import userRoutes from './users';
+import apiRoutes from './api';
+import authRoutes from './auth';
 
 const router = combineRouters(
-  userRoutes
+  authRoutes,
+  apiRoutes,
 );
 
 export default router;

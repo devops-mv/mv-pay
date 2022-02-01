@@ -1,7 +1,7 @@
 import Database from '../database';
 
-let db = Database.getInstance();
-let bookshelf = db.getBookshelf();
+const db = Database.getInstance();
+const bookshelf = db.getBookshelf();
 
 export default class User extends bookshelf.Model<User> {
 

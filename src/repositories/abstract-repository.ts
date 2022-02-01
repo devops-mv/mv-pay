@@ -3,9 +3,6 @@ import { Model } from "bookshelf";
 export abstract class AbstractRepository<T extends Model<T>> {
   protected abstract model: typeof Model;
 
-  constructor() {
-  }
-
   async pagedList(): Promise<IPagedList<T>> {
     const result = await new this.model()
       .fetchPage({
@@ -19,6 +16,14 @@ export abstract class AbstractRepository<T extends Model<T>> {
       pageSize: result.pagination.pageSize,
       totalPages: result.pagination.pageCount,
       totalRecords: result.pagination.rowCount,
+    };
+  }
+
+  async findOne(query: any): Promise<ISingleResult<T>> {
+    const result = await new this.model(query).fetch();
+
+    return {
+      data: result.toJSON(),
     };
   }
 
