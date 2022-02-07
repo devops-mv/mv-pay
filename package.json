@@ -15,6 +15,7 @@
     "rollback": "yarn knex migrate:rollback",
     "refresh": "yarn rollback && yarn migrate && yarn seed",
     "seed": "yarn knex seed:run",
+    "domv": "node ./node_modules/.bin/ts-node ./domv.ts",
     "lint": "tslint -c tslint.json -p tsconfig.json --fix"
   },
   "dependencies": {
@@ -33,7 +34,6 @@
     "knex": "^1.0.1",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
-    "koa-combine-routers": "^4.0.2",
     "pg": "^8.7.1"
   },
   "devDependencies": {

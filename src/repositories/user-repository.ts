@@ -1,5 +1,6 @@
 import User from "../database/models/user";
 import { AbstractRepository } from "./abstract-repository";
+import { ISingleResult } from "./interfaces";
 
 export class UserRepository extends AbstractRepository<User> {
   protected model = User;
@@ -8,7 +9,7 @@ export class UserRepository extends AbstractRepository<User> {
     super();
   }
 
-  async getByCredentials(username: string, password: string): Promise<ISingleResult<any>> {
+  async getByUsername(username: string): Promise<ISingleResult<any>> {
     const user = await new this.model({ username }).fetch();
     const result = {
       data: user.toJSON()

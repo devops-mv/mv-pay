@@ -7,10 +7,10 @@ const router = new Router({ prefix: '/auth' });
 
 const userRepository = new UserRepository();
 
-router.post('/login', async (ctx) => {
+router.post('/login', async (ctx: any) => {
   const payload = ctx.request.body.data;
 
-  const user = await userRepository.getByCredentials(payload.username, payload.password);
+  const user = await userRepository.getByUsername(payload.username);
 
   if (!user.data || !comparePassword(payload.password, user.data.password)) {
     ctx.status = 401;

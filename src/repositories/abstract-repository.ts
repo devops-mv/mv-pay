@@ -1,7 +1,8 @@
 import { Model } from "bookshelf";
+import { IPagedList, ISingleResult } from "./interfaces";
 
 export abstract class AbstractRepository<T extends Model<T>> {
-  protected abstract model: typeof Model;
+  protected abstract model: any;
 
   async pagedList(): Promise<IPagedList<T>> {
     const result = await new this.model()
