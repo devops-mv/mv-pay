@@ -1,5 +1,6 @@
 import type { Knex } from 'knex';
 import * as dotenv from 'dotenv';
+import { knexSnakeCaseMappers } from 'objection';
 dotenv.config({ path: "../../.env" });
 
 const config: { [key: string]: Knex.Config } = {
@@ -14,11 +15,12 @@ const config: { [key: string]: Knex.Config } = {
       charset: "utf8"
     },
     migrations: {
-      directory: __dirname + "/migrations"
+      directory: __dirname + "/../migrations"
     },
     seeds: {
-      directory: __dirname + "/seeds"
-    }
+      directory: __dirname + "/../seeds"
+    },
+    ...knexSnakeCaseMappers()
   },
   production: {
     client: process.env.DB_DRIVER,
@@ -34,7 +36,8 @@ const config: { [key: string]: Knex.Config } = {
     },
     seeds: {
       directory: __dirname + "/seeds"
-    }
+    },
+    ...knexSnakeCaseMappers()
   },
 };
 

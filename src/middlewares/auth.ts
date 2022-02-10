@@ -26,6 +26,7 @@ export default async function authMiddleware(ctx: DefaultContext, next: Next) {
   }
 
   const user: any = await userRepository.get(payload.id);
+
   ctx.state.user = {
     id: user.data.id,
     username: user.data.username

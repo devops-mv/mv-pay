@@ -1,43 +1,56 @@
-import { Model } from "bookshelf";
+import { Model } from "objection";
 import { IPagedList, ISingleResult } from "./interfaces";
 
-export abstract class AbstractRepository<T extends Model<T>> {
+export abstract class AbstractRepository<T extends Model> {
   protected abstract model: any;
 
-  async pagedList(): Promise<IPagedList<T>> {
-    const result = await new this.model()
-      .fetchPage({
-        pageSize: 10,
-        page: 1,
-      });
+  async pagedList(page = 1, pageSize = 15): Promise<IPagedList<T>> {
+    const result = await this.model
+      .query()
+      .page(page - 1, pageSize);
 
     return {
-      data: result.toJSON(),
-      page: result.pagination.page,
-      pageSize: result.pagination.pageSize,
-      totalPages: result.pagination.pageCount,
-      totalRecords: result.pagination.rowCount,
+      data: result.results,
+      page,
+      pageSize,
+      totalPages: Math.ceil(result.total / pageSize),
+      totalRecords: result.total,
     };
   }
 
   async findOne(query: any): Promise<ISingleResult<T>> {
-    const result = await new this.model(query).fetch();
+    const result = await this
+      .model
+      .query()
+      .where(query)
+      .first();
 
     return {
-      data: result.toJSON(),
+      data: result && result.toJSON(),
     };
   }
 
   async get(id: number): Promise<ISingleResult<T>> {
-    const result = await new this.model({ id }).fetch();
+    const result = await this
+      .model
+      .query()
+      .findById(id);
 
     return {
-      data: result.toJSON(),
+      data: result && result.toJSON(),
     };
   }
 
   async create(data: any): Promise<ISingleResult<T>> {
-    const result = await new this.model(data).save();
+    let result = await this
+      .model
+      .query()
+      .insert(data);
+
+    result = await this
+      .model
+      .query()
+      .findById(result.id);
 
     return {
       data: result.toJSON(),
@@ -45,15 +58,19 @@ export abstract class AbstractRepository<T extends Model<T>> {
   }
 
   async update(id: number, data: any): Promise<ISingleResult<T>> {
-    const result = await new this.model({ id }).fetch();
-    await result.save(data);
+    const result = await this
+      .model
+      .query()
+      .findById(id)
+      .patch(data)
+      .returning('*');
 
     return {
-      data: result.toJSON(),
+      data: result && result.toJSON(),
     };
   }
 
   async delete(id: number) {
-   await new this.model({ id }).destroy();
+   await this.model.findById(id).delete();
   }
 }

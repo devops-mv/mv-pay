@@ -1,7 +1,6 @@
 import { Layer } from "@koa/router";
 import router from "../../src/routes";
-import PermissionResource from "../../src/database/models/permission-resource";
-import Database from '../../src/database/database';
+import PermissionResource from "../../src/models/permission-resource";
 
 function startCase(str: string): string {
   return str.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join('-');
@@ -38,7 +37,7 @@ async function syncResources(resources: { [key: string]: any }) {
   const names = Object.values(resources).map((resource: any) => resource.name);
 
   // Delete resources that are not in the routes //
-  const obsolete = await new PermissionResource()
+  const obsolete = await new PermissionResource
     .where('name', 'not in', names)
     .fetchAll({ withRelated: ['permissions'] });
 
